@@ -21,6 +21,8 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui
+    
+win32: LIBS += -luser32
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
