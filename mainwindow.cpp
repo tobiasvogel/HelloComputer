@@ -7,6 +7,7 @@
 #include <QRandomGenerator>
 #include <QtMath>
 #include <QDebug>
+#include <QScreen>
 #include <QtMultimedia/QAudioFormat>
 
 MainWindow::MainWindow( QWidget *parent )
@@ -43,6 +44,16 @@ MainWindow::MainWindow( QWidget *parent )
    ui->_debugKeyPress->hide();
    ui->_debugKeyPress->setText( "" );
    #endif
+    
+   QLabel *copyrightLabel = new QLabel(this);
+   copyrightLabel->setText(QString("%1 2023 Tobias X. Vogel").arg(QString::fromWCharArray(L"\x00A9")));
+   copyrightLabel->adjustSize();
+   QScreen *screen = QGuiApplication::primaryScreen();
+   copyrightLabel->setGeometry((screen->geometry().width()-copyrightLabel->width()-20),
+                               (screen->geometry().height()-copyrightLabel->height()-12),
+                               copyrightLabel->width(),
+                               copyrightLabel->height());
+      
    this->grabKeyboard();
    this->grabMouse();
 
