@@ -58,6 +58,7 @@ class Application final : public QApplication {
 public:
    Application( int &argc, char **argv ) : QApplication( argc, argv ) {
       this->installEventFilter( this );
+      this->setOverrideCursor(QCursor(Qt::BlankCursor));
    }
    bool eventFilter( QObject *object, QEvent *event );
 
