@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="toolTip">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
     <property name="geometry">
@@ -22,6 +25,9 @@
       <width>67</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>TextLabel</string>
@@ -36,6 +42,9 @@
       <height>17</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string notr="true"/>
+    </property>
     <property name="text">
      <string>TextLabel</string>
     </property>
@@ -48,6 +57,9 @@
       <width>67</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>TextLabel</string>
@@ -62,6 +74,9 @@
       <height>17</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string notr="true"/>
+    </property>
     <property name="text">
      <string>TextLabel</string>
     </property>
@@ -75,6 +90,9 @@
       <height>17</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string notr="true"/>
+    </property>
     <property name="text">
      <string>TextLabel</string>
     </property>
@@ -87,6 +105,9 @@
       <width>67</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>TextLabel</string>

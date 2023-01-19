@@ -22,6 +22,9 @@ HEADERS += \
 FORMS += \
     mainwindow.ui
     
+TRANSLATIONS += i18n/hellocomputer_de.ts \
+                i18n/hellocomputer_en.ts
+
 win32: LIBS += -luser32
 
 RC_ICONS = res/hellocomputer.ico
