@@ -44,16 +44,22 @@ MainWindow::MainWindow( QWidget *parent )
    ui->_debugKeyPress->hide();
    ui->_debugKeyPress->setText( "" );
    #endif
-    
-   QLabel *copyrightLabel = new QLabel(this);
-   copyrightLabel->setText(QString("%1 2023 Tobias X. Vogel").arg(QString::fromWCharArray(L"\x00A9")));
-   copyrightLabel->adjustSize();
+
    QScreen *screen = QGuiApplication::primaryScreen();
-   copyrightLabel->setGeometry((screen->geometry().width()-copyrightLabel->width()-20),
-                               (screen->geometry().height()-copyrightLabel->height()-12),
-                               copyrightLabel->width(),
-                               copyrightLabel->height());
-      
+
+   ui->graphicLabel->setPixmap( QPixmap( ":hellocomputer.png" ) );
+   ui->graphicLabel->setGeometry( ( screen->geometry().width() / 2 - 256 ),
+                                  ( screen->geometry().height() / 2 - 256 ),
+                                  512, 512 );
+   ui->graphicLabel->setScaledContents( true );
+
+   ui->copyrightLabel->setText( QString( "%1 2023 Tobias X. Vogel" ).arg( QString::fromWCharArray( L"\x00A9" ) ) );
+   ui->copyrightLabel->adjustSize();
+   ui->copyrightLabel->setGeometry( ( screen->geometry().width() - ui->copyrightLabel->width() - 20 ),
+                                    ( screen->geometry().height() - ui->copyrightLabel->height() - 12 ),
+                                    ui->copyrightLabel->width(),
+                                    ui->copyrightLabel->height() );
+
    this->grabKeyboard();
    this->grabMouse();
 
@@ -156,6 +162,35 @@ void MainWindow::changeColor() {
    ui->_debugKeyPress->setText( QString( "%1; %2" ).arg( randNum ).arg( randCol ) );
    lastColorGroup = randNum;
    this->setStyleSheet( QString( "background-color: %1;" ).arg( color ) );
+
+   if ( !imageHidden ) {
+      ui->graphicLabel->hide();
+      imageHidden = true;
+   }
+
+   QColor _color;
+   _color.setNamedColor( color );
+
+   if ( determineTextColor( _color ) == 0 ) {
+      ui->label->setStyleSheet( "color: #000000;" );
+      ui->copyrightLabel->setStyleSheet( "color: #000000;" );
+
+   } else {
+      ui->label->setStyleSheet( "color: #ffffff;" );
+      ui->copyrightLabel->setStyleSheet( "color: #ffffff;" );
+   }
+}
+
+bool MainWindow::determineTextColor( QColor color ) { // as in http://www.w3.org/TR/AERT#color-contrast
+   // if zero is returned, text should be black, otherwise white for readability
+   int brightness = qRound( ( float )( ( color.red() * 299 ) + ( color.green() * 587 ) + ( color.blue() * 114 ) ) / 1000 );
+
+   if ( brightness > 125 ) {
+      return 0;
+
+   } else {
+      return 1;
+   }
 }
 
 void MainWindow::keyPressEvent( QKeyEvent *event ) {

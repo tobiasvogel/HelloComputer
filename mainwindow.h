@@ -19,6 +19,7 @@ public:
    MainWindow( QWidget *parent = nullptr );
    ~MainWindow();
    void changeColor( void );
+   bool determineTextColor( QColor color );
 
 protected:
    void keyPressEvent( QKeyEvent *event );
@@ -33,5 +34,6 @@ private:
    uint8_t lastColorGroup = 0;
    AudioContext ctx;
    QAudioFormat format;
+   bool imageHidden = false;
 };
 #endif // MAINWINDOW_H
