@@ -55,16 +55,45 @@ private:
 
 
 #if defined(Q_OS_LINUX) || defined(Q_WS_X11)
-#include <QProcess>
+#include <giomm/init.h>
+#include <giomm/settings.h>
 
 class GlobalKeyBlocker {
 public:
-   GlobalKeyBlocker() {};
-   ~GlobalKeyBlocker() {};
-   void block() {};
-   void unblock() {};
+   GlobalKeyBlocker() {
+      Gio::init();
+      s = Gio::Settings::create( "org.gnome.mutter" );
+   };
+   ~GlobalKeyBlocker() {
+      this->unblock();
+   };
+   void block() {
+      Glib::ustring key = "overlay-key";
+      Glib::ustring empty = "";
+      Glib::VariantBase value;
+      s->get_value( key, value );
+      restoreValue = QString::fromStdString( value.print() );
+
+      if ( restoreValue.right( 1 ) == "'" || restoreValue.right( 1 ) == "\"" ) {
+         restoreValue.chop( 1 );
+      }
+
+      if ( restoreValue.at( 0 ) == "'" || restoreValue.at( 0 ) == "\"" ) {
+         restoreValue = restoreValue.right( restoreValue.length() - 1 );
+      }
+
+      if ( restoreValue.isEmpty() ) { return; }
+
+      s->set_string( key, empty );
+   }
+   void unblock() {
+      Glib::ustring key = "overlay-key";
+      Glib::ustring previousValue = restoreValue.toStdString();
+      s->set_string( key, previousValue );
+   }
 private:
-   bool _blocked = false;
+   Glib::RefPtr<Gio::Settings> s;
+   QString restoreValue;
 };
 
 #endif

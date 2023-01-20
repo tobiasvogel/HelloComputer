@@ -13,7 +13,8 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow {
    Q_OBJECT
 
-public: MainWindow( QWidget *parent = nullptr );
+public:
+   MainWindow( QWidget *parent = nullptr );
    ~MainWindow();
    void changeColor( void );
    bool determineTextColor( QColor color );
@@ -27,7 +28,7 @@ protected:
    void preplay( AudioContext *ctx );
    void init( AudioContext *ctx );
 
-protected slots:
+protected Q_SLOTS:
    void run( void );
    void quit( void );
 

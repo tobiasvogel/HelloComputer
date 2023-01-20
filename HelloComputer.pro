@@ -27,6 +27,13 @@ TRANSLATIONS += i18n/hellocomputer_de.ts \
                 i18n/hellocomputer_en.ts
 
 win32: LIBS += -luser32
+unix|linux {
+CONFIG += no_keywords
+QT_CONFIG -= no-pkg-config
+CONFIG += link_pkgconfig
+PKGCONFIG += glibmm-2.4 giomm-2.4
+LIBS += -lglibmm-2.4 -lgiomm-2.4
+}
 
 RC_ICONS = res/hellocomputer.ico
 
