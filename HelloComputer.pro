@@ -20,7 +20,8 @@ HEADERS += \
     structs.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    settingsdialog.ui
     
 TRANSLATIONS += i18n/hellocomputer_de.ts \
                 i18n/hellocomputer_en.ts

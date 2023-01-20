@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "ui_settingsdialog.h"
 #include "colorpalette.h"
 
 #include <QTimer>
@@ -47,21 +48,12 @@ MainWindow::MainWindow( QWidget *parent )
 
    QScreen *screen = QGuiApplication::primaryScreen();
 
-   ui->graphicLabel->setPixmap( QPixmap( ":hellocomputer.png" ) );
-   ui->graphicLabel->setGeometry( ( screen->geometry().width() / 2 - 256 ),
-                                  ( screen->geometry().height() / 2 - 256 ),
-                                  512, 512 );
-   ui->graphicLabel->setScaledContents( true );
-
    ui->copyrightLabel->setText( QString( "%1 2023 Tobias X. Vogel" ).arg( QString::fromWCharArray( L"\x00A9" ) ) );
    ui->copyrightLabel->adjustSize();
    ui->copyrightLabel->setGeometry( ( screen->geometry().width() - ui->copyrightLabel->width() - 20 ),
                                     ( screen->geometry().height() - ui->copyrightLabel->height() - 12 ),
                                     ui->copyrightLabel->width(),
                                     ui->copyrightLabel->height() );
-
-   this->grabKeyboard();
-   this->grabMouse();
 
 
    format.setCodec( "audio/pcm" );
@@ -82,6 +74,8 @@ MainWindow::MainWindow( QWidget *parent )
    ctx.m_frequency = 100; //Initial tone frequency(hz)
 
    init( &ctx );
+
+   settingsDlg();
 }
 
 MainWindow::~MainWindow() {
@@ -163,11 +157,6 @@ void MainWindow::changeColor() {
    lastColorGroup = randNum;
    this->setStyleSheet( QString( "background-color: %1;" ).arg( color ) );
 
-   if ( !imageHidden ) {
-      ui->graphicLabel->hide();
-      imageHidden = true;
-   }
-
    QColor _color;
    _color.setNamedColor( color );
 
@@ -193,14 +182,51 @@ bool MainWindow::determineTextColor( QColor color ) { // as in http://www.w3.org
    }
 }
 
+void MainWindow::settingsDlg() {
+   settingsDialog = new QDialog( this, 0 );
+   Ui_Dialog dialogUi;
+   dialogUi.setupUi( settingsDialog );
+
+   dialogUi.startBtn->setIcon( QIcon( ":run.png" ) );
+   dialogUi.startBtn->setIconSize( QSize( 24, 24 ) );
+   dialogUi.quitBtn->setIcon( QIcon( ":quit.png" ) );
+   dialogUi.quitBtn->setIconSize( QSize( 24, 24 ) );
+
+   QObject::connect( dialogUi.quitBtn, SIGNAL( clicked() ), this, SLOT( quit() ) );
+   QObject::connect( dialogUi.startBtn, SIGNAL( clicked() ), this, SLOT( run() ) );
+   QObject::connect( dialogUi.volumeSettingSlider, &QAbstractSlider::valueChanged, [dialogUi]( int value ) { dialogUi.volumeSettingPercentageLabel->setText( QString( "%1%" ).arg( value ) ); } );
+   QObject::connect( dialogUi.soundSettingCheckbox, &QCheckBox::stateChanged, [ this ]( int value ) { if ( value == Qt::Checked ) { _playSound = true; } else { _playSound = false; } } );
+
+   QScreen *screen = QGuiApplication::primaryScreen();
+
+   int x = ( screen->geometry().width() - settingsDialog->width() ) / 2;
+   int y = ( screen->geometry().height() - settingsDialog->height() ) / 2;
+   settingsDialog->move( x, y );
+
+   settingsDialog->show();
+   settingsDialog->setModal( true );
+}
+
 void MainWindow::keyPressEvent( QKeyEvent *event ) {
+   if ( !_hasStarted ) { return; }
+
+   #ifdef QT_DEBUG
    ui->_debugKeyPress->setText( QString( event->key() ) );
+   #endif
    this->changeColor();
-   this->play( &ctx );
+
+   if ( _playSound ) {
+      this->play( &ctx );
+   }
 }
 
 void MainWindow::closeEvent( QCloseEvent *event ) {
    event->ignore();
+}
+
+
+static inline int timeToSize( int ms, const QAudioFormat &format ) {
+   return ( ( format.channelCount() * ( format.sampleSize() / 8 ) * format.sampleRate() ) * ms / 1000 );
 }
 
 QByteArray MainWindow::toneGenerator( AudioContext *ctx ) {
@@ -308,6 +334,8 @@ void MainWindow::init( AudioContext *ctx ) {
    //Initialize the audio output device
    ctx->m_audio_output = new QAudioOutput( ctx->m_output_device_info, ctx->m_format, qApp );
 
+   qDebug() << ctx->m_audio_output->volume();
+
    //Compute the size in bytes to be buffered based on the current format
    ctx->m_size_to_buffer = int( timeToSize( ctx->m_time_to_buffer, ctx->m_format ) );
 
@@ -318,5 +346,18 @@ void MainWindow::init( AudioContext *ctx ) {
       return;
    }
 
+}
+
+void MainWindow::run() {
+   qApp->setOverrideCursor( QCursor( Qt::BlankCursor ) );
+   settingsDialog->hide();
+   this->grabKeyboard();
+   this->grabMouse();
+   _hasStarted = true;
+}
+
+void MainWindow::quit() {
+   qApp->closeAllWindows();
+   qApp->quit();
 }
 

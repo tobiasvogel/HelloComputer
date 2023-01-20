@@ -2,24 +2,22 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDialog>
 #include "structs.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-static inline int timeToSize( int ms, const QAudioFormat &format ) {
-   return ( ( format.channelCount() * ( format.sampleSize() / 8 ) * format.sampleRate() ) * ms / 1000 );
-}
 
 class MainWindow : public QMainWindow {
    Q_OBJECT
 
-public:
-   MainWindow( QWidget *parent = nullptr );
+public: MainWindow( QWidget *parent = nullptr );
    ~MainWindow();
    void changeColor( void );
    bool determineTextColor( QColor color );
+   void settingsDlg( void );
 
 protected:
    void keyPressEvent( QKeyEvent *event );
@@ -29,11 +27,17 @@ protected:
    void preplay( AudioContext *ctx );
    void init( AudioContext *ctx );
 
+protected slots:
+   void run( void );
+   void quit( void );
+
 private:
    Ui::MainWindow *ui;
    uint8_t lastColorGroup = 0;
    AudioContext ctx;
    QAudioFormat format;
-   bool imageHidden = false;
+   QDialog *settingsDialog;
+   bool _hasStarted = false;
+   bool _playSound = true;
 };
 #endif // MAINWINDOW_H

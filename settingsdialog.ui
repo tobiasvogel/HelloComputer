@@ -55,6 +55,9 @@
      <property name="toolTip">
       <string notr="true"/>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #ffffff;</string>
+     </property>
      <property name="title">
       <string notr="true"/>
      </property>

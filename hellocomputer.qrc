@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file alias="hellocomputer.png">res/hellocomputer.png</file>
+        <file alias="banner.png">res/hellocomputer_banner.png</file>
+        <file alias="run.png">res/run_icon.png</file>
+        <file alias="quit.png">res/door_open.png</file>
     </qresource>
 </RCC>
