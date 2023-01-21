@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>Palette Generator</title>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <style>
+      html, body {
+      font-family: Helvetica, Sans, Arial, sans-serif;
+      }
+      form h1 {
+      font-size: 1.6em;
+      }
+      form select {
+      padding-left: 26px;
+      }
+      form option {
+      padding-left: 12px;
+      }
+      form option:before {
+      content: '';
+      display: inline-table;
+      min-width: 12px;
+      height: 0.8em;
+      border: 1px solid grey;
+      margin-left: -32px;
+      margin-right:8px;
+      }
+      input[type=button] {
+      padding: 0.5em;
+      }
+      hr:last-of-type {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      }
+      </style>
+      <script>
+      function generate() {
+      var paletteName = $("input#palette_name").val();
+      var output = "";
+      var selectboxes = document.getElementsByTagName("select");
+      for (i = 0; i < selectboxes.length; i++) {
+      var tempOutput = new Array();
+      tempOutput.push("QStringList GROUP"+(i+1)+"_"+paletteName.toLowerCase()+" = {");
+      tempOutput.push("\t// "+selectboxes[i].name+"\n");
+      for (j = 0; j < selectboxes[i].children.length; j++) {
+      if (selectboxes[i].children[j].selected) {
+      var colorValue = selectboxes[i].children[j].value;
+      var colorName = selectboxes[i].children[j].dataset.name;
+      tempOutput.push("\t\t\t\""+colorValue+"\",\t//"+colorName+"\n");
+      }
+      }
+      tempOutput[tempOutput.length - 1] = tempOutput[tempOutput.length - 1].replace(",","");
+      tempOutput.push("};\n");
+      for (k = 0; k < tempOutput.length; k++) {
+      output += tempOutput[k];
+      }
+      }
+      var winHtml = `<!DOCTYPE html>
+      <html>
+         <head>
+            <meta charset="utf-8">
+            <title>Output</title>
+         </head>
+         <body>
+                                <pre>`;
+                                 winHtml += output;
+            winHtml += `     </pre>
+         </body>
+      </html>`;
+   winHtml += `</body>
+</html>`;
+const winUrl = URL.createObjectURL(
+new Blob([winHtml], { type: "text/html" })
+);
+const win = window.open(
+winUrl,
+"win",
+`width=800,height=400,screenX=200,screenY=200`
+);
+}
+</script>
+</head>
+<body>
+<h1>Palette Generator</h1>
+<form name="colorselect">
+   <h1>Palette Name:</h1>
+   <input type="text" id="palette_name" name="palette_name">
+   <hr>
+   <p><i>&rarr; Hold down the Ctrl-key to select multiple colors per box.</i></p>
+   <h1>Pink colors</h1>
+   <select id="Pink_colors" name="Pink_colors" class="colors" multiple>
+      <option value="#C71585" data-name="MediumVioletRed">MediumVioletRed</option>
+      <option value="#FF1493" data-name="DeepPink">DeepPink</option>
+      <option value="#DB7093" data-name="PaleVioletRed">PaleVioletRed</option>
+      <option value="#FF69B4" data-name="HotPink">HotPink</option>
+      <option value="#FFB6C1" data-name="LightPink">LightPink</option>
+      <option value="#FFC0CB" data-name="Pink">Pink</option>
+   </select>
+   <h1>Red colors</h1>
+   <select id="Red_colors" name="Red_colors" class="colors" multiple>
+      <option value="#8B0000" data-name="DarkRed">DarkRed</option>
+      <option value="#FF0000" data-name="Red">Red</option>
+      <option value="#B22222" data-name="Firebrick">Firebrick</option>
+      <option value="#DC143C" data-name="Crimson">Crimson</option>
+      <option value="#CD5C5C" data-name="IndianRed">IndianRed</option>
+      <option value="#F08080" data-name="LightCoral">LightCoral</option>
+      <option value="#FA8072" data-name="Salmon">Salmon</option>
+      <option value="#E9967A" data-name="DarkSalmon">DarkSalmon</option>
+      <option value="#FFA07A" data-name="LightSalmon">LightSalmon</option>
+   </select>
+   <h1>Orange colors</h1>
+   <select id="Orange_colors" name="Orange_colors" class="colors" multiple>
+      <option value="#FF4500" data-name="OrangeRed">OrangeRed</option>
+      <option value="#FF6347" data-name="Tomato">Tomato</option>
+      <option value="#FF8C00" data-name="DarkOrange">DarkOrange</option>
+      <option value="#FF7F50" data-name="Coral">Coral</option>
+      <option value="#FFA500" data-name="Orange">Orange</option>
+   </select>
+   <h1>Yellow colors</h1>
+   <select id="Yellow_colors" name="Yellow_colors" class="colors" multiple>
+      <option value="#BDB76B" data-name="DarkKhaki">DarkKhaki</option>
+      <option value="#FFD700" data-name="Gold">Gold</option>
+      <option value="#F0E68C" data-name="Khaki">Khaki</option>
+      <option value="#FFDAB9" data-name="PeachPuff">PeachPuff</option>
+      <option value="#FFFF00" data-name="Yellow">Yellow</option>
+      <option value="#EEE8AA" data-name="PaleGoldenrod">PaleGoldenrod</option>
+      <option value="#FFE4B5" data-name="Moccasin">Moccasin</option>
+      <option value="#FFEFD5" data-name="PapayaWhip">PapayaWhip</option>
+      <option value="#FAFAD2" data-name="LightGoldenrodYellow">LightGoldenrodYellow</option>
+      <option value="#FFFACD" data-name="LemonChiffon">LemonChiffon</option>
+      <option value="#FFFFE0" data-name="LightYellow">LightYellow</option>
+   </select>
+   <h1>Brown colors</h1>
+   <select id="Brown_colors" name="Brown_colors" class="colors" multiple>
+      <option value="#800000" data-name="Maroon">Maroon</option>
+      <option value="#A52A2A" data-name="Brown">Brown</option>
+      <option value="#8B4513" data-name="SaddleBrown">SaddleBrown</option>
+      <option value="#A0522D" data-name="Sienna">Sienna</option>
+      <option value="#D2691E" data-name="Chocolate">Chocolate</option>
+      <option value="#B8860B" data-name="DarkGoldenrod">DarkGoldenrod</option>
+      <option value="#CD853F" data-name="Peru">Peru</option>
+      <option value="#BC8F8F" data-name="RosyBrown">RosyBrown</option>
+      <option value="#DAA520" data-name="Goldenrod">Goldenrod</option>
+      <option value="#F4A460" data-name="SandyBrown">SandyBrown</option>
+      <option value="#D2B48C" data-name="Tan">Tan</option>
+      <option value="#DEB887" data-name="Burlywood">Burlywood</option>
+      <option value="#F5DEB3" data-name="Wheat">Wheat</option>
+      <option value="#FFDEAD" data-name="NavajoWhite">NavajoWhite</option>
+      <option value="#FFE4C4" data-name="Bisque">Bisque</option>
+      <option value="#FFEBCD" data-name="BlanchedAlmond">BlanchedAlmond</option>
+      <option value="#FFF8DC" data-name="Cornsilk">Cornsilk</option>
+   </select>
+   <h1>Purple, violet, and magenta colors</h1>
+   <select id="Purple,_violet,_and_magenta_colors" name="Purple,_violet,_and_magenta_colors" class="colors" multiple>
+      <option value="#4B0082" data-name="Indigo">Indigo</option>
+      <option value="#800080" data-name="Purple">Purple</option>
+      <option value="#8B008B" data-name="DarkMagenta">DarkMagenta</option>
+      <option value="#9400D3" data-name="DarkViolet">DarkViolet</option>
+      <option value="#483D8B" data-name="DarkSlateBlue">DarkSlateBlue</option>
+      <option value="#8A2BE2" data-name="BlueViolet">BlueViolet</option>
+      <option value="#9932CC" data-name="DarkOrchid">DarkOrchid</option>
+      <option value="#FF00FF" data-name="Fuchsia">Fuchsia</option>
+      <option value="#FF00FF" data-name="Magenta">Magenta</option>
+      <option value="#6A5ACD" data-name="SlateBlue">SlateBlue</option>
+      <option value="#7B68EE" data-name="MediumSlateBlue">MediumSlateBlue</option>
+      <option value="#BA55D3" data-name="MediumOrchid">MediumOrchid</option>
+      <option value="#9370DB" data-name="MediumPurple">MediumPurple</option>
+      <option value="#DA70D6" data-name="Orchid">Orchid</option>
+      <option value="#EE82EE" data-name="Violet">Violet</option>
+      <option value="#DDA0DD" data-name="Plum">Plum</option>
+      <option value="#D8BFD8" data-name="Thistle">Thistle</option>
+      <option value="#E6E6FA" data-name="Lavender">Lavender</option>
+   </select>
+   <h1>Blue colors</h1>
+   <select id="Blue_colors" name="Blue_colors" class="colors" multiple>
+      <option value="#191970" data-name="MidnightBlue">MidnightBlue</option>
+      <option value="#000080" data-name="Navy">Navy</option>
+      <option value="#00008B" data-name="DarkBlue">DarkBlue</option>
+      <option value="#0000CD" data-name="MediumBlue">MediumBlue</option>
+      <option value="#0000FF" data-name="Blue">Blue</option>
+      <option value="#4169E1" data-name="RoyalBlue">RoyalBlue</option>
+      <option value="#4682B4" data-name="SteelBlue">SteelBlue</option>
+      <option value="#1E90FF" data-name="DodgerBlue">DodgerBlue</option>
+      <option value="#00BFFF" data-name="DeepSkyBlue">DeepSkyBlue</option>
+      <option value="#6495ED" data-name="CornflowerBlue">CornflowerBlue</option>
+      <option value="#87CEEB" data-name="SkyBlue">SkyBlue</option>
+      <option value="#87CEFA" data-name="LightSkyBlue">LightSkyBlue</option>
+      <option value="#B0C4DE" data-name="LightSteelBlue">LightSteelBlue</option>
+      <option value="#ADD8E6" data-name="LightBlue">LightBlue</option>
+      <option value="#B0E0E6" data-name="PowderBlue">PowderBlue</option>
+   </select>
+   <h1>Cyan colors</h1>
+   <select id="Cyan_colors" name="Cyan_colors" class="colors" multiple>
+      <option value="#008080" data-name="Teal">Teal</option>
+      <option value="#008B8B" data-name="DarkCyan">DarkCyan</option>
+      <option value="#20B2AA" data-name="LightSeaGreen">LightSeaGreen</option>
+      <option value="#5F9EA0" data-name="CadetBlue">CadetBlue</option>
+      <option value="#00CED1" data-name="DarkTurquoise">DarkTurquoise</option>
+      <option value="#48D1CC" data-name="MediumTurquoise">MediumTurquoise</option>
+      <option value="#40E0D0" data-name="Turquoise">Turquoise</option>
+      <option value="#00FFFF" data-name="Aqua">Aqua</option>
+      <option value="#00FFFF" data-name="Cyan">Cyan</option>
+      <option value="#7FFFD4" data-name="Aquamarine">Aquamarine</option>
+      <option value="#AFEEEE" data-name="PaleTurquoise">PaleTurquoise</option>
+      <option value="#E0FFFF" data-name="LightCyan">LightCyan</option>
+   </select>
+   <h1>Green colors</h1>
+   <select id="Green_colors" name="Green_colors" class="colors" multiple>
+      <option value="#006400" data-name="DarkGreen">DarkGreen</option>
+      <option value="#008000" data-name="Green">Green</option>
+      <option value="#556B2F" data-name="DarkOliveGreen">DarkOliveGreen</option>
+      <option value="#228B22" data-name="ForestGreen">ForestGreen</option>
+      <option value="#2E8B57" data-name="SeaGreen">SeaGreen</option>
+      <option value="#808000" data-name="Olive">Olive</option>
+      <option value="#6B8E23" data-name="OliveDrab">OliveDrab</option>
+      <option value="#3CB371" data-name="MediumSeaGreen">MediumSeaGreen</option>
+      <option value="#32CD32" data-name="LimeGreen">LimeGreen</option>
+      <option value="#00FF00" data-name="Lime">Lime</option>
+      <option value="#00FF7F" data-name="SpringGreen">SpringGreen</option>
+      <option value="#00FA9A" data-name="MediumSpringGreen">MediumSpringGreen</option>
+      <option value="#8FBC8F" data-name="DarkSeaGreen">DarkSeaGreen</option>
+      <option value="#66CDAA" data-name="MediumAquamarine">MediumAquamarine</option>
+      <option value="#9ACD32" data-name="YellowGreen">YellowGreen</option>
+      <option value="#7CFC00" data-name="LawnGreen">LawnGreen</option>
+      <option value="#7FFF00" data-name="Chartreuse">Chartreuse</option>
+      <option value="#90EE90" data-name="LightGreen">LightGreen</option>
+      <option value="#ADFF2F" data-name="GreenYellow">GreenYellow</option>
+      <option value="#98FB98" data-name="PaleGreen">PaleGreen</option>
+   </select>
+   <h1>Gray and black colors</h1>
+   <select id="Gray_and_black_colors" name="Gray_and_black_colors" class="colors" multiple>
+      <option value="#2F4F4F" data-name="DarkSlateGray">DarkSlateGray</option>
+      <option value="#696969" data-name="DimGray">DimGray</option>
+      <option value="#708090" data-name="SlateGray">SlateGray</option>
+      <option value="#808080" data-name="Gray">Gray</option>
+      <option value="#778899" data-name="LightSlateGray">LightSlateGray</option>
+      <option value="#A9A9A9" data-name="DarkGray">DarkGray</option>
+      <option value="#C0C0C0" data-name="Silver">Silver</option>
+      <option value="#D3D3D3" data-name="LightGray">LightGray</option>
+      <option value="#DCDCDC" data-name="Gainsboro">Gainsboro</option>
+   </select>
+</form>
+<hr>
+<input type="button" name="generate" value="Generate Palette" onClick="javascript:generate()"><br>
+<p><i>(Opens in new window.)</i></p><br><br>
+<script>
+$(document).ready( function(){
+var selectboxes = document.getElementsByTagName("select");
+for (i = 0; i < selectboxes.length; i++) {
+for (j = 0; j < selectboxes[i].children.length; j++) {
+var color = selectboxes[i].children[j].value;
+$('head').append("<style>form select:nth-of-type("+(i+1)+") option:nth-of-type("+(j+1)+")::before{ background-color: "+color+"; }</style>");
+}
+var elemLength = $("form select:nth-of-type("+(i+1)+")").children().length;
+$("form select:nth-of-type("+(i+1)+")").attr("size", elemLength);
+}
+});
+$("input#palette_name").change(function(){
+let regex = /^([A-Za-z]+)$/;
+let str = $(this).val();
+if (!regex.test(str)) {
+var corrected = "";
+for (i = 0; i < $(this).val().length; i++) {
+if (("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").indexOf(($(this).val()).substr(i,1)) >= 0) {
+corrected += ($(this).val()).substr(i,1);
+}
+}
+$(this).val(corrected);
+}
+});
+</script>
+</body>
+</html>

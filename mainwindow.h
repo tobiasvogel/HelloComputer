@@ -9,6 +9,10 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+enum Palette_t { COMPLETE, VIBRANT, PASTEL };
+
+typedef enum Palette_t Palette;
+
 
 class MainWindow : public QMainWindow {
    Q_OBJECT
@@ -19,6 +23,8 @@ public:
    void changeColor( void );
    bool determineTextColor( QColor color );
    void settingsDlg( void );
+
+   Q_ENUM( Palette );
 
 protected:
    void keyPressEvent( QKeyEvent *event );
@@ -38,7 +44,11 @@ private:
    AudioContext ctx;
    QAudioFormat format;
    QDialog *settingsDialog;
+   QTimer *delayTimer;
+   Palette usePalette;
+   uint16_t _delayDuration;
    bool _hasStarted = false;
    bool _playSound = true;
+   bool _delayPaused = false;
 };
 #endif // MAINWINDOW_H
