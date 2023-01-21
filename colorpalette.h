@@ -188,39 +188,49 @@ QStringList GROUP10_vibrant = {	// Gray_and_black_colors
    "#778899"  //LightSlateGray
 };
 
-
-QStringList GROUP1_pastel = {
-
+QStringList GROUP1_pastel = {	// Pink_colors
+   "#FFB6C1"	//LightPink
 };
-QStringList GROUP2_pastel = {
-
+QStringList GROUP2_pastel = {	// Red_colors
+   "#F08080",	//LightCoral
+   "#FFA07A"	//LightSalmon
 };
-QStringList GROUP3_pastel = {
-
+QStringList GROUP3_pastel = {	// Orange_colors
 };
-QStringList GROUP4_pastel = {
-
+QStringList GROUP4_pastel = {	// Yellow_colors
+   "#F0E68C",	//Khaki
+   "#FFE4B5"	//Moccasin
 };
-QStringList GROUP5_pastel = {
-
+QStringList GROUP5_pastel = {	// Brown_colors
+   "#BC8F8F",	//RosyBrown
+   "#F4A460"	//SandyBrown
 };
-QStringList GROUP6_pastel = {
-
+QStringList GROUP6_pastel = {	// Purple,_violet,_and_magenta_colors
+   "#9370DB",	//MediumPurple
+   "#EE82EE",	//Violet
+   "#D8BFD8"	//Thistle
 };
-QStringList GROUP7_pastel = {
-
+QStringList GROUP7_pastel = {	// Blue_colors
+   "#00008B",	//DarkBlue
+   "#6495ED",	//CornflowerBlue
+   "#87CEEB",	//SkyBlue
+   "#B0E0E6"	//PowderBlue
 };
-QStringList GROUP8_pastel = {
-
+QStringList GROUP8_pastel = {	// Cyan_colors
+   "#008080",	//Teal
+   "#7FFFD4"	//Aquamarine
 };
-QStringList GROUP9_pastel = {
-
+QStringList GROUP9_pastel = {	// Green_colors
+   "#006400",	//DarkGreen
+   "#3CB371",	//MediumSeaGreen
+   "#66CDAA",	//MediumAquamarine
+   "#98FB98"	//PaleGreen
 };
-QStringList GROUP10_pastel = {
-
+QStringList GROUP10_pastel = {	// Gray_and_black_colors
+   "#A9A9A9",	//DarkGray
+   "#DCDCDC"	//Gainsboro
 };
 
-#ifdef QT_DEBUG
 inline static int get_palette_size_complete( void ) {
    return ( GROUP1_complete.size() +
             GROUP2_complete.size() +
@@ -259,6 +269,5 @@ inline static int get_palette_size_pastel( void ) {
             GROUP9_pastel.size() +
             GROUP10_pastel.size() );
 }
-#endif
 
 #endif // COLORPALETTE_H

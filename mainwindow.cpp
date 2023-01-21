@@ -9,6 +9,8 @@
 #include <QtMath>
 #include <QDebug>
 #include <QScreen>
+#include <QGraphicsView>
+#include <QGraphicsScene>
 #include <QtMultimedia/QAudioFormat>
 
 MainWindow::MainWindow( QWidget *parent )
@@ -76,8 +78,6 @@ MainWindow::MainWindow( QWidget *parent )
 
    ctx.m_frequency = 100; //Initial tone frequency(hz)
 
-   init( &ctx );
-
    settingsDlg();
 
    #ifdef QT_DEBUG
@@ -110,17 +110,35 @@ void MainWindow::changeColor() {
       case 1:
          switch ( usePalette ) {
             case COMPLETE:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP1_complete.size() - 1 ) );
+               if ( GROUP1_complete.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP1_complete.size() - 1 ) );
+               }
+
                color = GROUP1_complete.at( randCol );
                break;
 
             case VIBRANT:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP1_vibrant.size() - 1 ) );
+               if ( GROUP1_vibrant.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP1_vibrant.size() - 1 ) );
+               }
+
                color = GROUP1_vibrant.at( randCol );
                break;
 
             case PASTEL:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP1_pastel.size() - 1 ) );
+               if ( GROUP1_pastel.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP1_pastel.size() - 1 ) );
+               }
+
                color = GROUP1_pastel.at( randCol );
                break;
 
@@ -133,17 +151,35 @@ void MainWindow::changeColor() {
       case 2:
          switch ( usePalette ) {
             case COMPLETE:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP2_complete.size() - 1 ) );
+               if ( GROUP2_complete.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP2_complete.size() - 1 ) );
+               }
+
                color = GROUP2_complete.at( randCol );
                break;
 
             case VIBRANT:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP2_vibrant.size() - 1 ) );
+               if ( GROUP2_vibrant.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP2_vibrant.size() - 1 ) );
+               }
+
                color = GROUP2_vibrant.at( randCol );
                break;
 
             case PASTEL:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP2_pastel.size() - 1 ) );
+               if ( GROUP2_pastel.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP2_pastel.size() - 1 ) );
+               }
+
                color = GROUP2_pastel.at( randCol );
                break;
 
@@ -156,17 +192,35 @@ void MainWindow::changeColor() {
       case 3:
          switch ( usePalette ) {
             case COMPLETE:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP3_complete.size() - 1 ) );
+               if ( GROUP3_complete.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP3_complete.size() - 1 ) );
+               }
+
                color = GROUP3_complete.at( randCol );
                break;
 
             case VIBRANT:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP3_vibrant.size() - 1 ) );
+               if ( GROUP3_vibrant.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP3_vibrant.size() - 1 ) );
+               }
+
                color = GROUP3_vibrant.at( randCol );
                break;
 
             case PASTEL:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP3_pastel.size() - 1 ) );
+               if ( GROUP3_pastel.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP3_pastel.size() - 1 ) );
+               }
+
                color = GROUP3_pastel.at( randCol );
                break;
 
@@ -179,17 +233,35 @@ void MainWindow::changeColor() {
       case 4:
          switch ( usePalette ) {
             case COMPLETE:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP4_complete.size() - 1 ) );
+               if ( GROUP4_complete.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP4_complete.size() - 1 ) );
+               }
+
                color = GROUP4_complete.at( randCol );
                break;
 
             case VIBRANT:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP4_vibrant.size() - 1 ) );
+               if ( GROUP4_vibrant.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP4_vibrant.size() - 1 ) );
+               }
+
                color = GROUP4_vibrant.at( randCol );
                break;
 
             case PASTEL:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP4_pastel.size() - 1 ) );
+               if ( GROUP4_pastel.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP4_pastel.size() - 1 ) );
+               }
+
                color = GROUP4_pastel.at( randCol );
                break;
 
@@ -202,17 +274,35 @@ void MainWindow::changeColor() {
       case 5:
          switch ( usePalette ) {
             case COMPLETE:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP5_complete.size() - 1 ) );
+               if ( GROUP5_complete.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP5_complete.size() - 1 ) );
+               }
+
                color = GROUP5_complete.at( randCol );
                break;
 
             case VIBRANT:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP5_vibrant.size() - 1 ) );
+               if ( GROUP5_vibrant.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP5_vibrant.size() - 1 ) );
+               }
+
                color = GROUP5_vibrant.at( randCol );
                break;
 
             case PASTEL:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP5_pastel.size() - 1 ) );
+               if ( GROUP5_pastel.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP5_pastel.size() - 1 ) );
+               }
+
                color = GROUP5_pastel.at( randCol );
                break;
 
@@ -225,17 +315,35 @@ void MainWindow::changeColor() {
       case 6:
          switch ( usePalette ) {
             case COMPLETE:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP6_complete.size() - 1 ) );
+               if ( GROUP6_complete.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP6_complete.size() - 1 ) );
+               }
+
                color = GROUP6_complete.at( randCol );
                break;
 
             case VIBRANT:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP6_vibrant.size() - 1 ) );
+               if ( GROUP6_vibrant.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP6_vibrant.size() - 1 ) );
+               }
+
                color = GROUP6_vibrant.at( randCol );
                break;
 
             case PASTEL:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP6_pastel.size() - 1 ) );
+               if ( GROUP6_pastel.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP6_pastel.size() - 1 ) );
+               }
+
                color = GROUP6_pastel.at( randCol );
                break;
 
@@ -248,17 +356,35 @@ void MainWindow::changeColor() {
       case 7:
          switch ( usePalette ) {
             case COMPLETE:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP7_complete.size() - 1 ) );
+               if ( GROUP7_complete.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP7_complete.size() - 1 ) );
+               }
+
                color = GROUP7_complete.at( randCol );
                break;
 
             case VIBRANT:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP7_vibrant.size() - 1 ) );
+               if ( GROUP7_vibrant.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP7_vibrant.size() - 1 ) );
+               }
+
                color = GROUP7_vibrant.at( randCol );
                break;
 
             case PASTEL:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP7_pastel.size() - 1 ) );
+               if ( GROUP7_pastel.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP7_pastel.size() - 1 ) );
+               }
+
                color = GROUP7_pastel.at( randCol );
                break;
 
@@ -271,17 +397,35 @@ void MainWindow::changeColor() {
       case 8:
          switch ( usePalette ) {
             case COMPLETE:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP8_complete.size() - 1 ) );
+               if ( GROUP8_complete.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP8_complete.size() - 1 ) );
+               }
+
                color = GROUP8_complete.at( randCol );
                break;
 
             case VIBRANT:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP8_vibrant.size() - 1 ) );
+               if ( GROUP8_vibrant.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP8_vibrant.size() - 1 ) );
+               }
+
                color = GROUP8_vibrant.at( randCol );
                break;
 
             case PASTEL:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP8_pastel.size() - 1 ) );
+               if ( GROUP8_pastel.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP8_pastel.size() - 1 ) );
+               }
+
                color = GROUP8_pastel.at( randCol );
                break;
 
@@ -294,17 +438,35 @@ void MainWindow::changeColor() {
       case 9:
          switch ( usePalette ) {
             case COMPLETE:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP9_complete.size() - 1 ) );
+               if ( GROUP9_complete.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP9_complete.size() - 1 ) );
+               }
+
                color = GROUP9_complete.at( randCol );
                break;
 
             case VIBRANT:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP9_vibrant.size() - 1 ) );
+               if ( GROUP9_vibrant.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP9_vibrant.size() - 1 ) );
+               }
+
                color = GROUP9_vibrant.at( randCol );
                break;
 
             case PASTEL:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP9_pastel.size() - 1 ) );
+               if ( GROUP9_pastel.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP9_pastel.size() - 1 ) );
+               }
+
                color = GROUP9_pastel.at( randCol );
                break;
 
@@ -317,21 +479,40 @@ void MainWindow::changeColor() {
       case 10:
          switch ( usePalette ) {
             case COMPLETE:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP10_complete.size() - 1 ) );
+               if ( GROUP10_complete.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP10_complete.size() - 1 ) );
+               }
+
                color = GROUP10_complete.at( randCol );
                break;
 
             case VIBRANT:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP10_vibrant.size() - 1 ) );
+               if ( GROUP10_vibrant.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP10_vibrant.size() - 1 ) );
+               }
+
                color = GROUP10_vibrant.at( randCol );
                break;
 
             case PASTEL:
-               randCol = QRandomGenerator::global()->bounded( 0, ( GROUP10_pastel.size() - 1 ) );
+               if ( GROUP10_pastel.size() == 1 ) {
+                  randCol = 0;
+
+               } else {
+                  randCol = QRandomGenerator::global()->bounded( 0, ( GROUP10_pastel.size() - 1 ) );
+               }
+
                color = GROUP10_pastel.at( randCol );
                break;
 
             default:
+               return;
                break;
          }
 
@@ -383,9 +564,19 @@ void MainWindow::settingsDlg() {
 
    QObject::connect( dialogUi.quitBtn, SIGNAL( clicked() ), this, SLOT( quit() ) );
    QObject::connect( dialogUi.startBtn, SIGNAL( clicked() ), this, SLOT( run() ) );
-   QObject::connect( dialogUi.volumeSettingSlider, &QAbstractSlider::valueChanged, [dialogUi]( int value ) { dialogUi.volumeSettingPercentageLabel->setText( QString( "%1%" ).arg( value ) ); } );
+   QObject::connect( dialogUi.volumeSettingSlider, &QAbstractSlider::valueChanged, [this, dialogUi]( int value ) { dialogUi.volumeSettingPercentageLabel->setText( QString( "%1%" ).arg( value ) ); _volume = value; } );
    QObject::connect( dialogUi.soundSettingCheckbox, &QCheckBox::stateChanged, [ this ]( int value ) { if ( value == Qt::Checked ) { _playSound = true; } else { _playSound = false; } } );
    QObject::connect( dialogUi.frequencySettingSpinBox, QOverload<int>::of( &QSpinBox::valueChanged ), [ this ]( int value ) { if ( value > 99 && value < 3001 ) { _delayDuration = value; } } );
+
+   QString clrGrpStr_complete( tr( "Komplett (%1 Farben)" ).arg( get_palette_size_complete() ) );
+   QString clrGrpStr_vibrant( tr( "Bunt (%1 Farben)" ).arg( get_palette_size_vibrant() ) );
+   QString clrGrpStr_pastel( tr( "Pastell (%1 Farben" ).arg( get_palette_size_pastel() ) );
+   dialogUi.colorSettingComboBox->addItem( clrGrpStr_complete, COMPLETE );
+   dialogUi.colorSettingComboBox->addItem( clrGrpStr_vibrant, VIBRANT );
+   dialogUi.colorSettingComboBox->addItem( clrGrpStr_pastel, PASTEL );
+
+   graphicsScene = new QGraphicsScene( settingsDialog );
+   graphicsView = new QGraphicsView( graphicsScene, dialogUi.settingsGrpBox );
 
    QScreen *screen = QGuiApplication::primaryScreen();
 
@@ -394,7 +585,33 @@ void MainWindow::settingsDlg() {
    settingsDialog->move( x, y );
 
    settingsDialog->show();
+
    settingsDialog->setModal( true );
+
+   QPixmap pixm = QPixmap( ":banner.png" );
+   int pixm_w = dialogUi.graphicLabel->width() - 8;
+   int pixm_h = dialogUi.graphicLabel->height() - 8;
+   dialogUi.graphicLabel->setPixmap( pixm.scaled( pixm_w, pixm_h, Qt::KeepAspectRatio ) );
+
+   int gv_X = dialogUi.colorSettingLabel->x();
+   int gv_Y = dialogUi.colorSettingComboBox->pos().y() + dialogUi.colorSettingComboBox->height() + 10;
+   int gv_W = dialogUi.colorSettingComboBox->pos().x() + dialogUi.colorSettingComboBox->width() - gv_X;
+   int gv_H = dialogUi.settingsGrpBox->height() - gv_Y - 14;
+
+   graphicsView->setGeometry( gv_X, gv_Y, gv_W, gv_H );
+
+   graphicsRect = graphicsView->rect();
+
+   this->renderColorPreview( usePalette, graphicsView->rect() );
+
+   QObject::connect( dialogUi.colorSettingComboBox, QOverload<int>::of( &QComboBox::currentIndexChanged ), [this, dialogUi]( int index ) {
+      if ( dialogUi.colorSettingComboBox->itemData( index ) == COMPLETE ) { usePalette = COMPLETE; this->renderColorPreview( usePalette, graphicsRect ); }
+
+      if ( dialogUi.colorSettingComboBox->itemData( index ) == VIBRANT ) { usePalette = VIBRANT; this->renderColorPreview( usePalette, graphicsRect ); }
+
+      if ( dialogUi.colorSettingComboBox->itemData( index ) == PASTEL ) { usePalette = PASTEL; this->renderColorPreview( usePalette, graphicsRect ); }
+   } );
+
 }
 
 void MainWindow::keyPressEvent( QKeyEvent *event ) {
@@ -408,7 +625,7 @@ void MainWindow::keyPressEvent( QKeyEvent *event ) {
    this->changeColor();
 
    _delayPaused = true;
-   delayTimer->singleShot( _delayDuration, [ = ] {_delayPaused = false;} );
+   delayTimer->singleShot( _delayDuration, [ = ] { _delayPaused = false; } );
 
    if ( _playSound ) {
       this->play( &ctx );
@@ -529,7 +746,7 @@ void MainWindow::init( AudioContext *ctx ) {
    //Initialize the audio output device
    ctx->m_audio_output = new QAudioOutput( ctx->m_output_device_info, ctx->m_format, qApp );
 
-   qDebug() << ctx->m_audio_output->volume();
+   ctx->m_audio_output->setVolume( ( ( float ) _volume ) / 100 );
 
    //Compute the size in bytes to be buffered based on the current format
    ctx->m_size_to_buffer = int( timeToSize( ctx->m_time_to_buffer, ctx->m_format ) );
@@ -543,11 +760,163 @@ void MainWindow::init( AudioContext *ctx ) {
 
 }
 
+void MainWindow::renderColorPreview( Palette p, QRect rect ) {
+   QVector<QColor> colorList;
+
+   graphicsScene->clear();
+
+   if ( p == COMPLETE ) {
+      Q_FOREACH ( QString str, GROUP1_complete ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP2_complete ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP3_complete ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP4_complete ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP5_complete ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP6_complete ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP7_complete ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP8_complete ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP9_complete ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP10_complete ) {
+         colorList.append( QColor( str ) );
+      }
+
+   } else if ( p == VIBRANT ) {
+      Q_FOREACH ( QString str, GROUP1_vibrant ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP2_vibrant ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP3_vibrant ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP4_vibrant ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP5_vibrant ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP6_vibrant ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP7_vibrant ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP8_vibrant ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP9_vibrant ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP10_vibrant ) {
+         colorList.append( QColor( str ) );
+      }
+
+   } else if ( p == PASTEL ) {
+      Q_FOREACH ( QString str, GROUP1_pastel ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP2_pastel ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP3_pastel ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP4_pastel ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP5_pastel ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP6_pastel ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP7_pastel ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP8_pastel ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP9_pastel ) {
+         colorList.append( QColor( str ) );
+      }
+
+      Q_FOREACH ( QString str, GROUP10_pastel ) {
+         colorList.append( QColor( str ) );
+      }
+
+   } else {
+      return;
+   }
+
+   int i = 0;
+   int j = 0;
+   int w = ( rect.width() / 33 );
+   int h = ( rect.height() / 4 ) - 4;
+
+   Q_FOREACH ( QColor color, colorList ) {
+      graphicsScene->addRect( 2 + ( i * w ) + i, 2 + ( h * j ) + ( j * 2 ), w, h, QPen( Qt::transparent ), QBrush( QColor( color ) ) );
+      i++;
+
+      if ( i % 32 == 0 ) {
+         j++;
+         i = 0;
+      }
+   }
+}
+
 void MainWindow::run() {
    qApp->setOverrideCursor( QCursor( Qt::BlankCursor ) );
    settingsDialog->hide();
    this->grabKeyboard();
    this->grabMouse();
+
+   init( &ctx );
+
+   _delayPaused = false;
    _hasStarted = true;
 }
 

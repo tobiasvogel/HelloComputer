@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QDialog>
+#include <QGraphicsView>
+#include <QGraphicsScene>
 #include "structs.h"
 
 QT_BEGIN_NAMESPACE
@@ -17,8 +19,7 @@ typedef enum Palette_t Palette;
 class MainWindow : public QMainWindow {
    Q_OBJECT
 
-public:
-   MainWindow( QWidget *parent = nullptr );
+public: MainWindow( QWidget *parent = nullptr );
    ~MainWindow();
    void changeColor( void );
    bool determineTextColor( QColor color );
@@ -33,6 +34,7 @@ protected:
    void play( AudioContext *ctx );
    void preplay( AudioContext *ctx );
    void init( AudioContext *ctx );
+   void renderColorPreview( Palette p, QRect rect );
 
 protected Q_SLOTS:
    void run( void );
@@ -45,8 +47,12 @@ private:
    QAudioFormat format;
    QDialog *settingsDialog;
    QTimer *delayTimer;
-   Palette usePalette;
-   uint16_t _delayDuration;
+   Palette usePalette = COMPLETE;
+   uint16_t _delayDuration = 330;
+   uint8_t _volume = 80;
+   QGraphicsScene *graphicsScene;
+   QGraphicsView *graphicsView;
+   QRect graphicsRect = QRect( 0, 0, 394, 88 );
    bool _hasStarted = false;
    bool _playSound = true;
    bool _delayPaused = false;
