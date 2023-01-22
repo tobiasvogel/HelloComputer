@@ -898,7 +898,11 @@ void MainWindow::renderColorPreview( Palette p, QRect rect ) {
    int h = ( rect.height() / 4 ) - 4;
 
    Q_FOREACH ( QColor color, colorList ) {
+#if defined(Q_OS_LINUX) || defined(Q_WS_X11)
       graphicsScene->addRect( 2 + ( i * w ) + i, 2 + ( h * j ) + ( j * 2 ), w, h, QPen( Qt::transparent ), QBrush( QColor( color ) ) );
+#else
+      graphicsScene->addRect( 2 + ( i * w ), 2 + ( h * j ) + ( j * 2 ), w, h, QPen( Qt::transparent ), QBrush( QColor( color ) ) );
+#endif
       i++;
 
       if ( i % 32 == 0 ) {
