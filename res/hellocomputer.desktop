@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=HelloComputer
+Exec=HelloComputer
+Icon=hellocomputer
+Categories=Game;KidsGame;Qt
